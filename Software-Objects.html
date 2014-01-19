@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the Software Evolution library
+
+Copyright (C) 2014 Eric Schulte <eschulte@cs.unm.edu>
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with the Invariant Section being "GNU GENERAL PUBLIC LICENSE,"
+A copy of the license is included in the section entitled
+"GNU Free Documentation License." -->
+<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Software Evolution Library: Software Objects</title>
+
+<meta name="description" content="Software Evolution Library: Software Objects">
+<meta name="keywords" content="Software Evolution Library: Software Objects">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Implementation.html#Implementation" rel="up" title="Implementation">
+<link href="Software-Methods.html#Software-Methods" rel="next" title="Software Methods">
+<link href="Implementation.html#Implementation" rel="prev" title="Implementation">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Software-Objects"></a>
+<div class="header">
+<p>
+Next: <a href="Software-Methods.html#Software-Methods" accesskey="n" rel="next">Software Methods</a>, Previous: <a href="Implementation.html#Implementation" accesskey="p" rel="prev">Implementation</a>, Up: <a href="Implementation.html#Implementation" accesskey="u" rel="up">Implementation</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Software-Objects-1"></a>
+<h3 class="section">2.1 Software Objects</h3>
+<a name="index-software-objects"></a>
+
+<p>The following types of software objects are supported.
+</p>
+<dl compact="compact">
+<dt><code>asm</code></dt>
+<dd><p>General assembler backend used to manipulate <code>.s</code> text assembler
+files.
+</p></dd>
+<dt><code>cil</code></dt>
+<dd><p>C abstract syntax trees using C Intermediate Language (CIL) (see
+<a href="http://kerneis.github.io/cil/">http://kerneis.github.io/cil/</a>).
+</p></dd>
+<dt><code>clang</code></dt>
+<dd><p>C language (including <code>C</code>, <code>C++</code>, <code>C#</code>, etc...)
+abstract syntax trees using the C Language frontend for LLVM (see
+<a href="http://clang.llvm.org/">http://clang.llvm.org/</a>).
+</p></dd>
+<dt><code>llvm</code></dt>
+<dd><p>Low Level Virtual Machine (LLVM) (see <a href="http://llvm.org">http://llvm.org</a>)
+intermediate representation (IR).
+</p></dd>
+<dt><code>elf-mips</code></dt>
+<dd><p>Executable Linkable Format (ELF) binaries in MIPS architectures.
+</p></dd>
+<dt><code>elf-x86</code></dt>
+<dd><p>ELF binaries in x86 architectures.
+</p></dd>
+<dt><code>lisp</code></dt>
+<dd><p>Common Lisp source code.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the Software Evolution library
+
+Copyright (C) 2014 Eric Schulte <eschulte@cs.unm.edu>
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with the Invariant Section being "GNU GENERAL PUBLIC LICENSE,"
+A copy of the license is included in the section entitled
+"GNU Free Documentation License." -->
+<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Software Evolution Library: Search Functions</title>
+
+<meta name="description" content="Software Evolution Library: Search Functions">
+<meta name="keywords" content="Software Evolution Library: Search Functions">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Implementation.html#Implementation" rel="up" title="Implementation">
+<link href="Usage.html#Usage" rel="next" title="Usage">
+<link href="Global-Variables.html#Global-Variables" rel="prev" title="Global Variables">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Search-Functions"></a>
+<div class="header">
+<p>
+Next: <a href="Usage.html#Usage" accesskey="n" rel="next">Usage</a>, Previous: <a href="Global-Variables.html#Global-Variables" accesskey="p" rel="prev">Global Variables</a>, Up: <a href="Implementation.html#Implementation" accesskey="u" rel="up">Implementation</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Search-Functions-1"></a>
+<h3 class="section">2.4 Search Functions</h3>
+<a name="index-search-functions"></a>
+
+<p>Currently two high-level search functions are implemented.  The
+<code>evolve</code> search function has received much more testing and is
+recommended.
+</p>
+<a name="evolve"></a><dl>
+<dt><a name="index-evolve"></a>Function: <strong>evolve</strong> <em>test &amp;key max-evals max-time target period period-fn every-fn filter</em></dt>
+<dd><p>Evolve the existing <code>*population*</code> of software objects using the
+supplied <code>TEST</code> function to evaluate the fitness of software
+objects.  The fitness returned by the <code>TEST</code> function is
+optimized.  A steady state evolutionary computation algorithm is used
+to evolve increasingly fit software objects in a process resembling
+natural selection.
+</p></dd></dl>
+
+<a name="mcmc"></a><dl>
+<dt><a name="index-mcmc"></a>Function: <strong>mcmc</strong> <em>original test &amp;key accept-fn max-evals max-time target period period-fn every-fn filter</em></dt>
+<dd><p>Preform Markov chain Monte Carlo search from the supplied
+<code>ORIGINAL</code> software object using the supplied <code>TEST</code>
+function to evaluate the fitness of software objects.  The fitness
+returned by the <code>test</code> function is optimized.
+</p></dd></dl>
+
+<p>Both functions take the following optional keyword arguments
+</p>
+<dl compact="compact">
+<dt><code>max-evals</code></dt>
+<dd><p>stop after this many fitness evaluations
+</p>
+</dd>
+<dt><code>max-time</code></dt>
+<dd><p>stop after this many seconds
+</p>
+</dd>
+<dt><code>target</code></dt>
+<dd><p>stop when an individual passes <code>TARGET-FIT</code>
+</p>
+</dd>
+<dt><code>period</code></dt>
+<dd><p>interval of fitness evaluations to run <code>PERIOD-FN</code>
+</p>
+</dd>
+<dt><code>period-fn</code></dt>
+<dd><p>function to run every <code>PERIOD</code> fitness evaluations
+</p>
+</dd>
+<dt><code>every-fn</code></dt>
+<dd><p>function to run before every fitness evaluation
+</p>
+</dd>
+</dl>
+
+<p>In addition the <code>evolve</code> function takes an optional <code>filter</code>
+keyword argument which when specified only includes individual for
+which <code>FILTER</code> returns true, and the <code>mcmc</code> function takes
+an optional <code>accept-fn</code> keyword argument which is a function of
+current and new fitness that returns acceptance.
+</p>
+
+
+
+</body>
+</html>

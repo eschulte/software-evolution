@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the Software Evolution library
+
+Copyright (C) 2014 Eric Schulte <eschulte@cs.unm.edu>
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with the Invariant Section being "GNU GENERAL PUBLIC LICENSE,"
+A copy of the license is included in the section entitled
+"GNU Free Documentation License." -->
+<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Software Evolution Library: Software Methods</title>
+
+<meta name="description" content="Software Evolution Library: Software Methods">
+<meta name="keywords" content="Software Evolution Library: Software Methods">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Implementation.html#Implementation" rel="up" title="Implementation">
+<link href="Global-Variables.html#Global-Variables" rel="next" title="Global Variables">
+<link href="Software-Objects.html#Software-Objects" rel="prev" title="Software Objects">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Software-Methods"></a>
+<div class="header">
+<p>
+Next: <a href="Global-Variables.html#Global-Variables" accesskey="n" rel="next">Global Variables</a>, Previous: <a href="Software-Objects.html#Software-Objects" accesskey="p" rel="prev">Software Objects</a>, Up: <a href="Implementation.html#Implementation" accesskey="u" rel="up">Implementation</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Software-Methods-1"></a>
+<h3 class="section">2.2 Software Methods</h3>
+<a name="index-software-methods"></a>
+
+<p>The following methods are defined for all software object types
+exposing a common interface for use by user programs or in heuristic
+search.
+</p>
+<a name="genome"></a><dl>
+<dt><a name="index-genome"></a>Function: <strong>genome</strong> <em>software</em></dt>
+<dd><p>The software genotype or &ldquo;code&rdquo;, exposed as a simplified data
+structure.  For example an AST genome, e.g., of a <code>cil</code> or
+<code>lisp</code> software object, my have a tree structure while the genome
+of a <code>asm</code> or <code>elf</code> software object will be a vector.
+</p></dd></dl>
+
+
+<a name="phenome"></a><dl>
+<dt><a name="index-phenome"></a>Function: <strong>phenome</strong> <em>software &amp;key bin</em></dt>
+<dd><p>The software phenotype.  This method will link, compile or serialize
+the software object as necessary returning an executable version of
+the software suitable for testing and evaluation
+</p></dd></dl>
+
+<a name="copy"></a><dl>
+<dt><a name="index-copy"></a>Function: <strong>copy</strong> <em>software</em></dt>
+<dd><p>Return a deep copy of a software object.
+</p></dd></dl>
+
+<a name="pick"></a><dl>
+<dt><a name="index-pick"></a>Function: <strong>pick</strong> <em>software key &amp;optional func</em></dt>
+<dd><p>Randomly select elements of the genome of <code>SOFTWARE</code>.  Selection
+may optionally be biased towards particular portions of the genome
+based on a <code>key</code> supplied to <code>pick</code>.  Related
+<code>pick-good</code> and <code>pick-bad</code> methods may also be customized.
+Useful for e.g., using annotations or fault localization information
+to bias mutation operations.
+</p></dd></dl>
+
+<a name="mutate"></a><dl>
+<dt><a name="index-mutate"></a>Function: <strong>mutate</strong> <em>software</em></dt>
+<dd><p>Randomly mutate the supplied software object.  The modified software
+object and the applied mutation are returned.
+</p></dd></dl>
+
+<a name="crossover"></a><dl>
+<dt><a name="index-crossover"></a>Function: <strong>crossover</strong> <em>software-a software-b</em></dt>
+<dd><p>Perform the specified form of crossover on two software objects
+returning a new software object and information on the crossover
+operation performed (e.g., the indices of crossover).  The related
+<code>one-point-crossover</code> and <code>two-point-crossover</code> methods may
+also be used to perform particular types of crossover.
+</p></dd></dl>
+
+<a name="from_002dfile"></a><dl>
+<dt><a name="index-from_002dfile"></a>Function: <strong>from-file</strong> <em>software file</em></dt>
+<dd><p>Initialize a software object <code>SOFTWARE</code> using the contents of
+<code>FILE</code>.
+</p></dd></dl>
+
+<a name="to_002dfile"></a><dl>
+<dt><a name="index-to_002dfile"></a>Function: <strong>to-file</strong> <em>software file</em></dt>
+<dd><p>Write the genome of software object <code>SOFTWARE</code> to <code>FILE</code>.
+</p></dd></dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Global-Variables.html#Global-Variables" accesskey="n" rel="next">Global Variables</a>, Previous: <a href="Software-Objects.html#Software-Objects" accesskey="p" rel="prev">Software Objects</a>, Up: <a href="Implementation.html#Implementation" accesskey="u" rel="up">Implementation</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>
