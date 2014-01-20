@@ -70,11 +70,21 @@ Next: <a href="Software-Objects.html#Software-Objects" accesskey="n" rel="next">
 <a name="index-implementation"></a>
 
 <p>The Software Evolution library is implemented in Common Lisp and is
-intended for use in Common Lisp programs.  The Common Lisp Object
-System (CLOS) is used to define a general interface into many types of
-software objects.  Software objects may be manipulated using simple
-&ldquo;genetic&rdquo; mutation operations.
+intended for use in Common Lisp programs.  <a href="#fig_003aoverview">Figure 2.1</a> provides
+an overview of the Software Evolution system, the specifics of which
+are given in remainder of this section.
 </p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Software-Objects.html#Software-Objects" accesskey="1">Software Objects</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Representation of software
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Software-Methods.html#Software-Methods" accesskey="2">Software Methods</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Manipulation of software
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Global-Variables.html#Global-Variables" accesskey="3">Global Variables</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Interface to search processes
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Search-Functions.html#Search-Functions" accesskey="4">Search Functions</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">High level functions to perform search
+</td></tr>
+</table>
+
 <div class="float"><a name="fig_003aoverview"></a>
 <div class="example">
 <pre class="example">                                                      population functions
@@ -118,24 +128,6 @@ software objects.  Software objects may be manipulated using simple
 
 <div class="float-caption"><p><strong>Figure 2.1: </strong>Software Evolution API.  Exported functions and variables are
 shown along with the software object class hierarchy.</p></div></div>
-<p>The library exports high level heuristic search functions
-(<code>evolve</code> and <code>mcmc</code>) and global variables used for
-configuration and interaction with search processes.
-<a href="#fig_003aoverview">Figure 2.1</a> provides an overview of the Software Evolution
-system including global variables, exported functions and the software
-object class hierarchy.
-</p>
-<table class="menu" border="0" cellspacing="0">
-<tr><td align="left" valign="top">&bull; <a href="Software-Objects.html#Software-Objects" accesskey="1">Software Objects</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Representation of software
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="Software-Methods.html#Software-Methods" accesskey="2">Software Methods</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Manipulation of software
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="Global-Variables.html#Global-Variables" accesskey="3">Global Variables</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Global interface to search
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="Search-Functions.html#Search-Functions" accesskey="4">Search Functions</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">High level functions to perform search
-</td></tr>
-</table>
-
 
 
 
