@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This file documents the Software Evolution library
+
+Copyright (C) 2014 Eric Schulte <eschulte@cs.unm.edu>
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with the Invariant Section being "GNU GENERAL PUBLIC LICENSE,"
+A copy of the license is included in the section entitled
+"GNU Free Documentation License." -->
+<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<head>
+<title>Software Evolution Library: Repair</title>
+
+<meta name="description" content="Software Evolution Library: Repair">
+<meta name="keywords" content="Software Evolution Library: Repair">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="index.html#Top" rel="start" title="Top">
+<link href="Index.html#Index" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Usage.html#Usage" rel="up" title="Usage">
+<link href="Copying.html#Copying" rel="next" title="Copying">
+<link href="Neutral-Variants.html#Neutral-Variants" rel="prev" title="Neutral Variants">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<a name="Repair"></a>
+<div class="header">
+<p>
+Next: <a href="Copying.html#Copying" accesskey="n" rel="next">Copying</a>, Previous: <a href="Neutral-Variants.html#Neutral-Variants" accesskey="p" rel="prev">Neutral Variants</a>, Up: <a href="Usage.html#Usage" accesskey="u" rel="up">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="Repair-1"></a>
+<h3 class="section">3.4 Repair</h3>
+<a name="index-repair"></a>
+
+<p>Using the <code>test</code> function defined in a previous example
+(see <a href="Evaluation.html#Evaluation">Evaluation</a>), the code block below searches for a &ldquo;repair&rdquo;
+of the buggy gcd implementation in <code>../test/gcd/gcd.s</code>.  The
+&ldquo;repair&rdquo; will be a version of gcd which passes all 11 tests run in
+<code>test</code>.
+</p>
+<p>The <code>target</code> and <code>max-evals</code> keyword arguments are passed to
+<code>evolve</code> (see <a href="Search-Functions.html#evolve">evolve</a>).  These arguments terminate the
+evolutionary search when either a repair has been reached or a budget
+of fitness evaluations has been exhausted respectively.
+</p>
+<p>The following properties of this example should be noted.
+</p>
+<ol>
+<li> Before calling <code>evolve</code> the population is populated with copies
+of the original program.
+
+</li><li> The <code>*orig*</code> individual is assigned a fitness before the
+<code>*population*</code> is populated.  This is necessary as the search
+functions assume that every element of <code>*population*</code> already
+have a fitness assigned.
+
+</li><li> The <code>*population*</code> is not explicitly passed to the <code>evolve</code>
+function which implicitly modifies the <code>*population*</code> variable.
+When this function terminates the evolved program variants will be
+saved in the <code>*population*</code>.
+
+</li></ol>
+
+<pre class="verbatim">(in-package :software-evolution-example)
+
+(defvar *orig* (from-file (make-instance 'asm) &quot;../test/gcd/gcd.s&quot;))
+
+(setf (fitness *orig*) (test *orig*))   ; (2)
+
+(setf *population*
+      (loop :for i :below 100 :collect (copy *orig*))) ; (1)
+
+(evolve #'test :max-evals 100 :target 11) ; (3)
+</pre>
+
+
+
+
+
+
+
+
+</body>
+</html>
