@@ -109,11 +109,45 @@ saved in the <code>*population*</code>.
 
 (evolve #'test :max-evals 100 :target 11) ; (3)
 </pre>
+<a name="Parallel-Repair"></a>
+<h3 class="heading">Parallel Repair</h3>
+<a name="index-parallel-repair"></a>
+
+<p>Evolution may be parallelized by calling <code>evolve</code> in multiple
+threads.  For example a parallel version of the above example would
+replace,
+</p>
+<div class="example">
+<pre class="example">(evolve #'test :max-evals 100 :target 11)
+</pre></div>
+
+<p>with the following.
+</p>
+<div class="example">
+<pre class="example">(require 'bordeaux-threads)
+(defvar *num-threads* 64 &quot;Number of available cores.&quot;)
+
+;; launch *num-threads* evolution threads
+(let (threads)
+  (loop :for n :below *num-threads* :do
+     (push (bordeaux-threads:make-thread
+            (lambda () (evolve #'test :max-evals 100 :target 11))
+            :name (format nil &quot;opt-~d&quot; n))
+           threads)))
+
+;; wait for all threads to return
+(mapc #'bordeaux-threads:join-thread threads)
+</pre></div>
 
 
 
 
 
+<hr>
+<div class="header">
+<p>
+Next: <a href="Copying.html#Copying" accesskey="n" rel="next">Copying</a>, Previous: <a href="Neutral-Variants.html#Neutral-Variants" accesskey="p" rel="prev">Neutral Variants</a>, Up: <a href="Usage.html#Usage" accesskey="u" rel="up">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html#Index" title="Index" rel="index">Index</a>]</p>
+</div>
 
 
 
