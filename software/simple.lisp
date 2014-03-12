@@ -130,13 +130,6 @@
 ;;; Crossover
 (defmethod crossover ((a simple) (b simple)) (two-point-crossover a b))
 
-#|
-(defun align-for-crossover (a b &key (test equal) key)
-  "Return two offsets which align genomes A and B for maximum similarity.
-TEST may be used to test for similarity and should return a boolean (number?)."
-  (values 0 0))
-|#
-
 (defmethod two-point-crossover ((a simple) (b simple))
   ;; Two point crossover
   (let ((range (min (size a) (size b))))
@@ -161,6 +154,36 @@ TEST may be used to test for similarity and should return a boolean (number?)."
                                    (subseq (genome a) point))))
           (values new point))
         (values (copy a) nil))))
+
+(defun contexts (list size)
+  "Return lists of contexts of LIST of radius SIZE."
+  (loop :for i :below (length list) :collect
+     (loop :for j :from (max 0 (- i size))
+        :to (min (1- (length list)) (+ i size)) :collect (nth j list))))
+
+(defun synapsing-points
+    (a b &key (context 2) (test (lambda (a b) (if (tree-equal a b) 1 0))) key)
+  "Return points from A and B respectively which occur in similar context.
+CONTEXT determines the number of elements on either side of the points
+to consider.  TEST should take two elements and return a similarity
+metric between 0 and 1.  KEY may be a function of one argument whose
+value is passed to TEST."
+  (proportional-pick (mapcar (lambda (a b)
+                               (mean (mapcar test
+                                             (if key (mapcar key a) a)
+                                             (if key (mapcar key b) b))))
+                             (contexts a context)
+                             (contexts b context))))
+
+(defmethod synapsing-crossover ((a simple) (b simple))
+  (let* ((starts (synapsing-points (genome a) (genome b)))
+         (ends (synapsing-points (subseq (genome a) (first starts))
+                                 (subseq (genome b) (second starts))))
+         (new (copy a)))
+    (setf (genome new)
+          (copy-tree (append (subseq (genome a) 0 (first starts))
+                             (subseq (genome b) (second starts) (second ends))
+                             (subseq (genome a) (second starts)))))))
 
 
 ;;; light software objects
