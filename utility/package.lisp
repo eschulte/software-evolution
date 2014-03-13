@@ -43,6 +43,7 @@
    :mapconcat
    :drop
    :take
+   :chunks
    :levenshtein-distance
    ;; debugging
    :*note-level*
