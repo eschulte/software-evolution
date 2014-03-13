@@ -92,6 +92,12 @@ Define an :around method on this function to record crossovers."))
 (defgeneric two-point-crossover (software-a software-b)
   (:documentation "Crossover between two points."))
 
+(defgeneric synapsing-crossover (software-a software-b)
+  (:documentation "Two-point crossover with similarity at cut points."))
+
+(defgeneric syntactic-similarity-crossover (software-a software-b)
+  (:documentation "Two-point crossover in which regions must be similar."))
+
 (defgeneric from-file (software file)
   (:documentation "Initialize SOFTWARE with contents of FILE."))
 

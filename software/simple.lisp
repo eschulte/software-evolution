@@ -189,7 +189,8 @@ value is passed to TEST."
     (setf (genome new)
           (copy-tree (append (subseq (genome a) 0 (first starts))
                              (subseq (genome b) (second starts) (second ends))
-                             (subseq (genome a) (second starts)))))))
+                             (subseq (genome a) (second starts)))))
+    (values new (mapcar #'cons starts ends))))
 
 
 ;;; light software objects
