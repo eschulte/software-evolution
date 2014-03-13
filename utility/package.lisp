@@ -34,6 +34,8 @@
    :different-it
    :counts
    :proportional-pick
+   :position-extremum
+   :position-extremum-rand
    :aget
    :getter
    :transpose

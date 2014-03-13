@@ -155,25 +155,31 @@
           (values new point))
         (values (copy a) nil))))
 
+(defun context (list i size)
+  (loop :for j :from (max 0 (- i size)) :to (min (1- (length list)) (+ i size))
+     :collect (nth j list)))
+
 (defun contexts (list size)
   "Return lists of contexts of LIST of radius SIZE."
-  (loop :for i :below (length list) :collect
-     (loop :for j :from (max 0 (- i size))
-        :to (min (1- (length list)) (+ i size)) :collect (nth j list))))
+  (loop :for i :below (length list) :collect (context list i size)))
 
 (defun synapsing-points
     (a b &key (context 2) (test (lambda (a b) (if (tree-equal a b) 1 0))) key)
-  "Return points from A and B respectively which occur in similar context.
-CONTEXT determines the number of elements on either side of the points
-to consider.  TEST should take two elements and return a similarity
+  "Return points from a and b which have similar context.
+First select a point from B at random, then select a point from A
+proportionately based on the similarity of context.  CONTEXT
+determines the number of elements on either side of the points to
+consider.  TEST should take two elements and return a similarity
 metric between 0 and 1.  KEY may be a function of one argument whose
 value is passed to TEST."
-  (proportional-pick (mapcar (lambda (a b)
-                               (mean (mapcar test
-                                             (if key (mapcar key a) a)
-                                             (if key (mapcar key b) b))))
-                             (contexts a context)
-                             (contexts b context))))
+  (let* ((ap (random (length a)))
+         (a-ctx (let ((ctx (subseq a
+                                   (max 0 (- ap context))
+                                   (min (length a) (+ ap context 1)))))
+                  (if key (mapcar key ctx) ctx)))
+         (bp (position-extremum-rand (contexts b context) #'>
+               [#'mean {mapcar test a-ctx} {mapcar (or key #'identity)}])))
+    (list ap bp)))
 
 (defmethod synapsing-crossover ((a simple) (b simple))
   (let* ((starts (synapsing-points (genome a) (genome b)))
