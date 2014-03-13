@@ -288,7 +288,7 @@ Keyword argument FRAC will return fractions instead of raw counts."
 (defun proportional-pick (list key)
   (let ((raw (reduce (lambda (acc el) (cons (float (+ el (car acc))) acc))
                      (mapcar key list) :initial-value '(0))))
-    (position-if {<= (random (second raw))} (cdr (reverse raw)))))
+    (position-if {<= (random (first raw))} (cdr (reverse raw)))))
 
 (defun position-extremum (list predicate key)
   "Returns the position in LIST of the element maximizing KEY."
