@@ -31,7 +31,7 @@
    :one-point-crossover
    :two-point-crossover
    :synapsing-crossover
-   :syntactic-similarity-crossover
+   :similarity-crossover
    :*edit-consolidation-size*
    :*consolidated-edits*
    :*edit-consolidation-function*

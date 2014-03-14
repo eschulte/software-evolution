@@ -92,11 +92,18 @@ Define an :around method on this function to record crossovers."))
 (defgeneric two-point-crossover (software-a software-b)
   (:documentation "Crossover between two points."))
 
-(defgeneric synapsing-crossover (software-a software-b)
-  (:documentation "Two-point crossover with similarity at cut points."))
+(defgeneric synapsing-crossover (software-a software-b &key key context test)
+  (:documentation "Two-point crossover with similarity at cut points.
+Optional argument TEST measures similarity of genome elements and
+should return a number between 0 (not at all similar) and
+1 (identical).  Optional argument CONTEXT determines the radius of the
+context to test for similarity."))
 
-(defgeneric syntactic-similarity-crossover (software-a software-b)
-  (:documentation "Two-point crossover in which regions must be similar."))
+(defgeneric similarity-crossover (software-a software-b &key key test)
+  (:documentation "Two-point crossover in which regions must be
+similar.  Optional argument TEST measures similarity of genome
+elements and should return a number between 0 (not at all similar) and
+1 (identical)."))
 
 (defgeneric from-file (software file)
   (:documentation "Initialize SOFTWARE with contents of FILE."))

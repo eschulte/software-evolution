@@ -29,6 +29,9 @@
 (defclass simple (software)
   ((genome :initarg :genome :accessor genome :initform nil)))
 
+(defmethod copy ((simple simple))
+  (make-instance 'simple :genome (copy-tree (genome simple))))
+
 (declaim (inline lines))
 (defmethod lines ((simple simple))
   (remove nil (mapcar {aget :line} (genome simple))))
@@ -163,8 +166,10 @@
   "Return lists of contexts of LIST of radius SIZE."
   (loop :for i :below (length list) :collect (context list i size)))
 
-(defun synapsing-points
-    (a b &key (context 2) (test (lambda (a b) (if (tree-equal a b) 1 0))) key)
+(defun synapsing-points (a b &key
+                               (context 2)
+                               (test (lambda (a b) (if (tree-equal a b) 1 0)))
+                               (key 'identity))
   "Return points from a and b which have similar context.
 First select a point from B at random, then select a point from A
 proportionately based on the similarity of context.  CONTEXT
@@ -177,20 +182,55 @@ value is passed to TEST."
                                    (max 0 (- ap context))
                                    (min (length a) (+ ap context 1)))))
                   (if key (mapcar key ctx) ctx)))
-         (bp (position-extremum-rand (contexts b context) #'>
-               [#'mean {mapcar test a-ctx} {mapcar (or key #'identity)}])))
+         (bp
+          (position-extremum-rand (contexts b context) #'>
+                                  [#'mean {mapcar test a-ctx} {mapcar key}])))
+    ;; Debugging, print the matched sequences
+    ;; (format t "~S -- ~S~%" a-ctx (mapcar key (context b bp context)))
     (list ap bp)))
 
-(defmethod synapsing-crossover ((a simple) (b simple))
-  (let* ((starts (synapsing-points (genome a) (genome b)))
-         (ends (synapsing-points (subseq (genome a) (first starts))
-                                 (subseq (genome b) (second starts))))
+(defmethod synapsing-crossover ((a simple) (b simple)
+                                &key
+                                  (key {aget :line})
+                                  (context 2)
+                                  (test (lambda (a b) (if (tree-equal a b) 1 0))))
+  (let* ((starts (synapsing-points (genome a) (genome b)
+                                   :key key :context context :test test))
+         (ends (mapcar #'+ starts
+                       (synapsing-points (subseq (genome a) (first starts))
+                                         (subseq (genome b) (second starts))
+                                         :key key :context context :test test)))
          (new (copy a)))
     (setf (genome new)
           (copy-tree (append (subseq (genome a) 0 (first starts))
                              (subseq (genome b) (second starts) (second ends))
-                             (subseq (genome a) (second starts)))))
+                             (subseq (genome a) (first ends)))))
     (values new (mapcar #'cons starts ends))))
+
+(defmethod similarity-crossover ((a simple) (b simple)
+                                 &key
+                                   (key {aget :line})
+                                   (test (lambda (a b) (if (tree-equal a b) 1 0))))
+  (let ((range (min (size a) (size b))))
+    (if (> range 0)
+        (let* ((new (copy a))
+               ;; random subset of A
+               (pts (sort (loop :for i :below 2 :collect (random range)) #'<))
+               (size (- (second pts) (first pts)))
+               ;; beginning of a subset of B similar to random subset of A
+               (bs
+                (proportional-pick
+                 (chunks (genome b) size)
+                 [{+ (/ 0.1 size)} #'mean
+                  {mapcar [test key] (apply #'subseq (genome a) pts)}]))
+               (b-pts (list bs (+ bs (apply #'- (reverse pts))))))
+          (setf (genome new)
+                (append
+                 (subseq (genome a) 0 (first pts))
+                 (apply #'subseq (genome b) b-pts)
+                 (subseq (genome a) (second pts))))
+          (values new pts))
+        (values (copy a) nil))))
 
 
 ;;; light software objects
