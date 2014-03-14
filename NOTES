@@ -116,7 +116,41 @@ Stashed away in the VC history.
 - 29cc873
 - 3cf6b1f
 
-* Tasks [20/21]
+* Tasks [22/27]
+** TODO non-fixed point crossover [2/5]
+- important for sub-population and between differently compiled code
+- https://en.wikipedia.org/wiki/Homologous_recombination#Facilitating_genetic_transfer
+- [[http://gallus.reactome.org/cgi-bin/eventbrowser?DB=test_gallus_reactome_release_2_myisam&ID=75228&]]
+
+*** DONE Synapsing Variable-Length Crossover
+#+begin_src bibtex
+  @article{hutt2007synapsing,
+    author={Hutt, Ben and Warwick, Kevin},
+    title={Synapsing variable-length crossover: Meaningful crossover for variable-length genomes},
+    journal={Evolutionary Computation, IEEE Transactions on},
+    year={2007},
+    volume={11},
+    number={1},
+    pages={118--131}
+  }
+#+end_src
+Synapsing crossover is a two point crossover which attempts to find
+crossover points which occur in similar contexts in each of the
+parents.  It is designed for variable length non-homogeneous
+populations.
+
+In the original work both cut-points of the crossover should be
+identical sequences of at least N, however we don't strictly require
+identity.
+
+*** DONE Syntactic Similarity Crossover
+Another popular crossover technique is to crossover similar sequences.
+This is biologically plausible, the likelihood of crossing over two
+sequences in biology is the log of the similarity.
+
+*** TODO start/stop codons
+*** TODO Source-LOC based Crossover
+*** TODO Source-Method based Crossover
 ** DONE MIPS elf rep
 - http://en.wikipedia.org/wiki/MIPS_architecture
 - http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html
