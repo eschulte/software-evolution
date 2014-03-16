@@ -217,12 +217,12 @@ value is passed to TEST."
                ;; random subset of A
                (pts (sort (loop :for i :below 2 :collect (random range)) #'<))
                (size (- (second pts) (first pts)))
+               (base (mapcar key (apply #'subseq (genome a) pts)))
                ;; beginning of a subset of B similar to random subset of A
                (bs
                 (proportional-pick
                  (chunks (genome b) size)
-                 [{+ (/ 0.1 size)} #'mean
-                  {mapcar [test key] (apply #'subseq (genome a) pts)}]))
+                 [{+ (/ 0.1 size)} #'mean {mapcar test base} {mapcar key}]))
                (b-pts (list bs (+ bs (apply #'- (reverse pts))))))
           (setf (genome new)
                 (append
