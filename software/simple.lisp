@@ -90,7 +90,7 @@
 (defmethod mutate ((simple simple))
   (unless (> (size simple) 0) (error 'mutate :text "No valid IDs" :obj simple))
   (setf (fitness simple) nil)
-  (let ((op (case (random-elt '(cut insert swap))
+  (let ((op (case (random-element *random-generator* '(cut insert swap))
               (cut    `(:cut    ,(pick-bad simple)))
               (insert `(:insert ,(pick-bad simple) ,(pick-good simple)))
               (swap   `(:swap   ,(pick-bad simple) ,(pick-good simple))))))
@@ -114,16 +114,16 @@
                             genome))))))
 
 (defmethod mcmc-step ((simple simple))
-  (let ((point (random (size simple))))
+  (let ((point (rand (size simple))))
     (with-slots (genome) simple
       (setf genome
-            (if (zerop (random 2))
+            (if (zerop (rand 2))
                 ;; delete an element
                 (append (subseq genome 0 point)
                         (subseq genome (1+ point)))
                 ;; insert an element
                 (append (subseq genome 0 point)
-                        (list (random-elt *mcmc-fodder*))
+                        (list (random-element *random-generator* *mcmc-fodder*))
                         (subseq genome point)))))))
 
 
@@ -141,7 +141,7 @@ TEST may be used to test for similarity and should return a boolean (number?)."
   ;; Two point crossover
   (let ((range (min (size a) (size b))))
     (if (> range 0)
-        (let ((points (sort (loop :for i :below 2 :collect (random range)) #'<))
+        (let ((points (sort (loop :for i :below 2 :collect (rand range)) #'<))
               (new (copy a)))
           (setf (genome new)
                 (copy-tree (append
@@ -154,7 +154,7 @@ TEST may be used to test for similarity and should return a boolean (number?)."
 (defmethod one-point-crossover ((a simple) (b simple))
   (let ((range (min (size a) (size b))))
     (if (> range 0)
-        (let ((point (random range))
+        (let ((point (rand range))
               (new (copy a)))
           (setf (genome new)
                 (copy-tree (append (subseq (genome b) 0 point)
@@ -358,7 +358,7 @@ initialize the RANGE object."))
           "Can not crossover range objects with unequal references.")
   (let ((range (min (size a) (size b))))
     (if (> range 0)
-        (let ((point (random range))
+        (let ((point (rand range))
               (new (copy a)))
           (setf (genome new)
                 (copy-tree (append (range-subseq (genome a) 0 point)
@@ -369,7 +369,7 @@ initialize the RANGE object."))
 (defmethod two-point-crossover ((a sw-range) (b sw-range))
   (let ((range (min (size a) (size b))))
     (if (> range 0)
-        (let ((points (sort (loop :for i :below 2 :collect (random range)) #'<))
+        (let ((points (sort (loop :for i :below 2 :collect (rand range)) #'<))
               (new (copy a)))
           (setf (genome new)
                 (copy-tree

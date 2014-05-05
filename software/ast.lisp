@@ -69,7 +69,7 @@
   (unless (> (size ast) 0)
     (error 'mutate :text "No valid IDs" :obj ast))
   (setf (fitness ast) nil)
-  (let ((op (case (random-elt '(cut insert swap))
+  (let ((op (case (random-element *random-generator* '(cut insert swap))
               (cut    `(:cut    ,(pick-bad ast)))
               (insert `(:insert ,(pick-bad ast) ,(pick-good ast)))
               (swap   `(:swap   ,(pick-bad ast) ,(pick-good ast))))))
@@ -86,8 +86,8 @@
   (flet ((line-breaks (genome)
            (loop :for char :in (coerce genome 'list) :as index :from 0
               :when (equal char #\Newline) :collect index)))
-    (let ((a-point (random-elt (line-breaks (genome a))))
-          (b-point (random-elt (line-breaks (genome b))))
+    (let ((a-point (random-element *random-generator* (line-breaks (genome a))))
+          (b-point (random-element *random-generator* (line-breaks (genome b))))
           (new (copy a)))
       (setf (genome new)
             (copy-seq (concatenate 'string

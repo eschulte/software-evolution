@@ -35,13 +35,13 @@ it, and applies the changed data in `genome' of ELF-SW."))
     (declare (ignorable stdout stderr))
     (values bin exit)))
 
-(defmethod pick-good ((elf elf-sw)) (random (length (genome elf))))
-(defmethod pick-bad ((elf elf-sw)) (random (length (genome elf))))
+(defmethod pick-good ((elf elf-sw)) (rand (length (genome elf))))
+(defmethod pick-bad ((elf elf-sw)) (rand (length (genome elf))))
 
 (defmethod mutate ((elf elf-sw))
   "Randomly mutate ELF."
   (setf (fitness elf) nil)
-  (let ((op (case (random-elt '(cut insert swap))
+  (let ((op (case (random-element *random-generator* '(cut insert swap))
               (cut      `(:cut    ,(pick-bad elf)))
               (insert   `(:insert ,(pick-bad elf) ,(pick-good elf)))
               (swap     `(:swap   ,(pick-bad elf) ,(pick-good elf)))

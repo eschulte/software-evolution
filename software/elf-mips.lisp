@@ -71,7 +71,7 @@
     genome))
 
 ;; Thanks to the uniform width of MIPS instructions, this is the only
-;; operation which requires any bookkeeping.  We'll try to 
+;; operation which requires any bookkeeping.  We'll try to
 (defvar elf-mips-max-displacement nil
   "Maximum range that `elf-insert' will displace instructions.
 This is the range within which insertion will search for a nop to
@@ -118,7 +118,7 @@ A value of nil means never replace.")
 
 (defmethod crossover ((a elf-mips-sw) (b elf-mips-sw))
   "One point crossover."
-  (let ((point (random (length (genome a))))
+  (let ((point (rand (length (genome a))))
         (new (copy a)))
     (setf (genome new) (concatenate 'vector
                          (subseq (genome a) 0 point)

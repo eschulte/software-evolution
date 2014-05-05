@@ -9,6 +9,9 @@
    :cl-ppcre
    :elf
    :software-evolution-utility)
+  (:import-from :cl-variates
+    #:random-element #:integer-random #:rand
+    #:make-random-number-generator #:*random-generator*)
   (:shadow :size :type :magic-number)
   (:export
    ;; software objects
