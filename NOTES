@@ -116,7 +116,19 @@ Stashed away in the VC history.
 - 29cc873
 - 3cf6b1f
 
-* Tasks [22/27]
+* Tasks [23/28]
+** DONE debug cil-mutate
+: 14:11 < stharding> _schulte_: do you have a working example for 
+:                    cil-mutate? when I use the 'cil software 
+:                    object, evolve never makes any progress. i.e. 
+:                    *fitness-evals* never increments past zero 
+:                    and all I get is the output of cil-mutate 
+:                    dumped to the screen
+
+It turns out cil-mutate had never been implemented, just stubbed out.
+This is now fixed sufficiently to repair file:test/gcd/gcd.c using the
+code in file:test/gcd/repair-ast.lisp.
+
 ** TODO non-fixed point crossover [2/5]
 - important for sub-population and between differently compiled code
 - https://en.wikipedia.org/wiki/Homologous_recombination#Facilitating_genetic_transfer
