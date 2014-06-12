@@ -8,6 +8,9 @@
    :trivial-shell
    :cl-ppcre
    :cl-store)
+  (:import-from :cl-variates
+    #:random-element #:integer-random #:rand
+    #:make-random-number-generator #:*random-generator*)
   (:export
    :infinity
    ;; OS

@@ -288,7 +288,7 @@ Keyword argument FRAC will return fractions instead of raw counts."
 (defun proportional-pick (list key)
   (let ((raw (reduce (lambda (acc el) (cons (+ el (car acc)) acc))
                      (mapcar key list) :initial-value '(0))))
-    (position-if {<= (random (second raw))} (cdr (reverse raw)))))
+    (position-if {<= (rand (first raw))} (cdr (reverse raw)))))
 
 (defun aget (item list &key (test #'eql))
   "Get KEY from association list LIST."

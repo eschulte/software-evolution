@@ -16,7 +16,8 @@ techniques."
                split-sequence
                cl-ppcre
                elf
-               software-evolution-utility :cl-variates)
+               software-evolution-utility
+               cl-variates)
   :in-order-to ((test-op (test-op software-evolution-test)))
   :components
   ((:module base
